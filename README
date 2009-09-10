@@ -1,0 +1,14 @@
+Inspired by reddit discussion at:
+http://www.reddit.com/r/programming/comments/9ire8/if_you_had_a_year_of_free_time_to_develop_your/c0cxs9k
+
+DEBATELY is a blog-style debating platform.  Because the problem with the web is that there aren't enough arguments.
+
+2 selected users can debate on a topic. Debate viewers can comment on the arguments, and their comments will be shown next to the relevant parts of the argument. Viewers can mark "good points" and "bad points" to determine who was most persuasive in the debate.
+
+Alice posts a thesis she'd like to debate.  She has the option of picking who she's like to debate, and they have the option to accept or reject that challenge.  She can also choose to post her thesis publicly and wait for challengers, and choose the challenger she wants to debate.
+
+Bob wants to debate Alice.  He posts a message saying this, and Alice, impressed by Bob's linguistic prowess, accepts his challenge.  Now they have control of the debate.  Bob and Alice can post as many times as they'd like in whichever order they'd like, but the ideal flow is a back-and-forth.
+
+Charlie thinks Bob has a good point in one of his messages.  He posts a comment specifically referencing that message (perhaps just a portion of that message?) and gives Bob a "debate point".
+
+During the debate, users can see how many "debate points" each debater has earned in the debate.

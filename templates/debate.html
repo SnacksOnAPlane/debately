@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block title %}{{ debate.title }}{% endblock %}
+
+{% block content %}
+{% for entry in entries %}
+    <div class="author">{{ entry.author }}</div>
+    <div class="pub_date">{{ entry.pub_date }}</div>
+    <p class="debate_entry">{{ entry.text }}</p>
+{% endfor %}
+{% endblock %}

@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Debately</h1>
+<h2>Recent Debates</h2>
+{% for debate in debates %}
+<a class="debate_title" href="debates/{{ debate.id }}">{{ debate.title }}</a>
+{% endfor %}
+{% endblock %}

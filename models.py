@@ -9,6 +9,7 @@ POINT_CHOICES = (
 
 class Debate(models.Model):
   title = models.CharField(max_length=200)
+  summary = models.TextField() # not for the first entry!  just a summary, please
   pub_date = models.DateTimeField() # default to now
   instigator = models.ForeignKey(User)
 

@@ -3,6 +3,8 @@
 {% block title %}{{ debate.title }}{% endblock %}
 
 {% block content %}
+<h1>{{ debate.title }}</h1>
+<div class="debate_summary">{{ debate.summary }}</div>
 {% for entry in entries %}
     <div class="author">{{ entry.author }}</div>
     <div class="pub_date">{{ entry.pub_date }}</div>

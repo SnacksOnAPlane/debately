@@ -4,6 +4,14 @@
 
 {% block content %}
 <h1>{{ debate.title }}</h1>
+<div class="user_head" id="instigator">
+  <a href="/users/{{ debate.instigator.username }}">{{ debate.instigator.username }}</a>
+  <div class="points">{{ instigatorpoints }}</div> Debate Points
+</div>
+<div class="user_head" id="challenger">
+  <a href="/users/{{ debate.challenger.username }}">{{ debate.challenger.username }}</a>
+  <div class="points">{{ challengerpoints }}</div> Debate Points
+</div>
 <div class="debate_summary">{{ debate.summary }}</div>
 {% for entry in entries %}
     <div class="author">{{ entry.author }}</div>

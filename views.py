@@ -6,3 +6,10 @@ def index(req):
   debates = Debate.objects.all().order_by('-pub_date')
   return render_to_response('index.html', {'debates': debates})
 
+def debate(req, id):
+  debate = Debate.objects.get(id = id)
+  c = { "debate": debate,
+      "instigatorpoints": getInstigatorPoints(debate),
+      "challengerpoints": getChallengerPoints(debate),
+      }
+  return render_to_response('debate.html', c)

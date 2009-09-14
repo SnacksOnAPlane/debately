@@ -24,6 +24,6 @@ class Comment(models.Model):
   author = models.ForeignKey(User)
   text = models.TextField()
   parentEntry = models.ForeignKey(Entry)
-  parentComment = models.ForeignKey('self')
+  parentComment = models.ForeignKey('self', null = True, blank = True)
   pub_date = models.DateTimeField(auto_now_add = True)
   parentPoints = models.SmallIntegerField(choices = POINT_CHOICES, default = 0)

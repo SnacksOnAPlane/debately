@@ -25,4 +25,4 @@ class Comment(models.Model):
   parentEntry = models.ForeignKey(Entry)
   parentComment = models.ForeignKey('self')
   pub_date = models.DateTimeField(auto_now_add = True)
-  parentPoints = models.SmallIntegerField(choices = POINT_CHOICES)
+  parentPoints = models.SmallIntegerField(choices = POINT_CHOICES, default = 0)

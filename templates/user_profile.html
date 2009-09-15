@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block title %}{{ debate.title }}{% endblock %}
+
+{% block content %}
+<h1>{{ profile_user.username }}</h1>
+<span id="profile_details">
+Joined: {{ user_profile.join_date|date:"d F Y" }}
+</span>
+{% endblock %}

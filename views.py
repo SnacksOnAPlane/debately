@@ -8,7 +8,8 @@ from models import Debate, Entry, Comment, UserProfile
 def index(req):
   # list all debates by pubdate
   debates = Debate.objects.all().order_by('-pub_date')
-  return render_to_response('index.html', {'debates': debates})
+  return render_to_response('index.html', 
+                            RequestContext(req, {'debates': debates}))
 
 def getDebatePoints(debate, user):
   return Comment.objects.filter(parentEntry__debate = debate, parentEntry__author = user, parentComment = None).aggregate(Sum('parentPoints'))['parentPoints__sum']
@@ -23,7 +24,7 @@ def debate(req, id):
       "challengerpoints": getDebatePoints(debate, debate.challenger),
       "entries": Entry.objects.filter(debate = debate)
       }
-  return render_to_response('debate.html', c)
+  return render_to_response('debate.html', RequestContext(req, c))
 
 
 def userpage(req, user_name):

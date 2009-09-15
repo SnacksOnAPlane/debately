@@ -1,6 +1,7 @@
 from django.conf.urls.defaults import *
 
-urlpatterns = patterns('',
-    (r'^$', 'debately.views.index'),
-    (r'^debates/(\d+)$', 'debately.views.debate'),
+urlpatterns = patterns('debately.views',
+    (r'^debates/(\d+)$', 'debate'),
+    (r'^users/(.*)', 'userpage'),
+    (r'^$', 'index'),
 )

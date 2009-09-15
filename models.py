@@ -27,3 +27,27 @@ class Comment(models.Model):
   parentComment = models.ForeignKey('self', null = True, blank = True)
   pub_date = models.DateTimeField(auto_now_add = True)
   parentPoints = models.SmallIntegerField(choices = POINT_CHOICES, default = 0)
+
+
+class UserProfile(models.Model):
+  """
+  A debate profile for users containing debate site details for each user.
+  To get a user profile, call use the get_for_user(user_name) class method
+  """
+  user = models.ForeignKey(User)
+  join_date = models.DateTimeField(auto_now_add=True)
+  
+  @classmethod
+  def get_profile_for_user(cls, profile_user):
+    """
+    Get debate user profile for given user.
+    Creates new UserProfile for user if a user profile does not already exist.
+    """
+    try:
+      profile = UserProfile.objects.filter(user=profile_user)[0]
+    except IndexError:
+      profile = UserProfile(user=profile_user)
+      profile.save()
+
+    return profile
+    

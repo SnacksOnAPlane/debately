@@ -2,13 +2,20 @@
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="{{MEDIA_URL}}/static/reset.css" />
+    <link rel="stylesheet" href="{{MEDIA_URL}}/static/style.css" />
     <title>{% block title %}Debately{% endblock %}</title>
 </head>
 
 <body>
+    <div id="header">
+    </div>
+
     <div id="content">
         {% block content %}{% endblock %}
+    </div>
+
+    <div id="footer">
     </div>
 </body>
 </html>

@@ -1,0 +1,18 @@
+#header {
+  height: 100px;
+  background-color: #e0ebff;
+  border-bottom: 1px solid #666;
+  margin-bottom: 20px;
+}
+
+#content {
+    width: 980px;
+    margin: auto;
+}
+
+#footer {
+ height: 40px;
+ background-color: #ddd;
+ margin-top: 20px;
+ border-top: 1px solid black;
+ border-bottom: 1px solid #555;

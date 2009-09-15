@@ -1,0 +1,83 @@
+---- GETTING STARTED ----
+
+To create a new debately django project, simply follow these instructions. 
+(Note that this is for starting a local testing/development project, 
+and NOT a suggested deployment strategy).
+
+1. Start a new django project ( This is a quick overview, much more detailed 
+information can be found in the Django tutorial
+http://docs.djangoproject.com/en/dev/intro/tutorial01/ )
+
+Run the following command to create a new Django project and 
+download the debately source. This will create a new directory 
+named YOUR_PROJECT. (replace 'YOUR_PROJECT' with whatever you'd like
+to name your new project)
+
+  django-admin.py startproject YOUR_PROJECT
+  cd YOUR_PROJECT
+  git clone git://github.com/SnacksOnAPlane/debately.git 
+
+You should now have a directory named YOUR_PROJECT, and a subdirectory
+named debately which contains the debately app files.
+
+2. Edit YOUR_PROJECT/setting.py:
+Some example values for the settings.py. 
+
+    # your database connection setting.
+    DATABASE_ENGINE = 'sqlite3'
+    DATABASE_NAME = '/tmp/debately.db' 
+
+    # include the debately app in your INSTALLED_APPS
+    INSTALLED_APPS = (
+        'django.contrib.admin',
+    	'django.contrib.auth',
+    	'django.contrib.contenttypes',
+    	'django.contrib.sessions',
+    	'django.contrib.sites',
+    	'debately'
+    )
+
+3. Edit YOUR_PROJECT/urls.py:
+    # uncomment these line to enable the admin
+    from django.contrib import admin
+    admin.autodiscover()
+
+    # this sends all requests except admin pages to 
+    # the debately app, If you'd like to run additional
+    # apps, this will need to be modified.
+    urlpatterns = patterns('',
+        (r'^admin/', include(admin.site.urls)),
+        (r'', include('debately.urls')),
+    )
+
+
+4. Create database and load fixture data:
+
+Run the following command from your project directory to create the
+initial database:
+
+    python manage.py syncdb
+
+When promted to create an admin user, you can select 'no' as we
+will load userdata from the included fixtures
+
+Use the following command to load test fixtures:    
+    
+    python manage.py loaddata debately/fixtures/debately_data.json
+
+The fixtures will install 3 sample users (alice, bob, and charlie, 
+passwords same as usernames) and a sample "tastes great/less filling" debate.
+It will also install an admin user (username admin, password admin).
+    
+You should now be able to start your development server:
+
+    python manage.py runserver
+
+and then point your browser to 
+    http://localhost:8000
+
+If everything went well you should now see the debately "recent debates" 
+page.
+
+Question or problems can be posted in the debately-devs user group:
+http://groups.google.com/group/debately-devs

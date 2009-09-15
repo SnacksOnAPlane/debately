@@ -16,16 +16,3 @@ During the debate, users can see how many "debate points" each debater has earne
 Users can register their point of view at any time in a debate on a sliding scale between "Agree completely with Alice" and "Agree completely with Bob".  We will use a sliding scale for input.
 
 
----- INSTALLATION ----
-
-Start a new django project.  Set up DB access and all that good stuff.  git clone the repo while in your project directory.
-Add the following to the project's urls.py file:
-
-    (r'^', include('debately-site.debately.urls')),
-
-To install sample data, run the following:
-
-python manage.py loaddata debately/fixtures/debately_data.json
-
-This will install 3 sample users (alice, bob, and charlie, passwords same as usernames) and a sample "tastes great/less filling" debate.
-It will also install an admin user (username admin, password admin).

@@ -4,7 +4,10 @@
 <h1>Debately</h1>
 <a href="debates/create/">Start a debate</a>
 <h2>Recent Debates</h2>
+<ul class="debates">
 {% for debate in debates %}
-<a class="debate_title" href="debates/{{ debate.id }}">{{ debate.title }}</a>
+<li><a class="debate_title" href="debates/{{ debate.id }}">{{ debate.title }}</a>
+<div class="debate_summary">{{ debate.summary }}</div></li>
 {% endfor %}
+</ul>
 {% endblock %}

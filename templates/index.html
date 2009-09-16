@@ -7,7 +7,15 @@
 <ul class="debates">
 {% for debate in debates %}
 <li><a class="debate_title" href="debates/{{ debate.id }}">{{ debate.title }}</a>
-<div class="debate_summary">{{ debate.summary }}</div></li>
+<div class="debate_summary">{{ debate.summary }}</div>
+<div class="stats">
+	<a class="user" href="users/{{ debate.instigator.username }}">{{ debate.instigator.username }}</a>
+	vs.
+	<a class="user" href="users/{{ debate.challenger.username }}">{{ debate.challenger.username}}</a>
+	{% if debate.last_post %}
+	<div class="lastpost">last post by {{ debate.last_post.author }} at {{ debate.last_post.pub_date }}</div>
+	{% endif %}
+	</li>
 {% endfor %}
 </ul>
 {% endblock %}

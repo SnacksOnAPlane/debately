@@ -15,7 +15,12 @@ class Debate(models.Model):
     pub_date = models.DateTimeField(auto_now_add = True)
     instigator = models.ForeignKey(User, related_name = "instigator")
     challenger = models.ForeignKey(User, related_name = "challenger", null = True, blank = True)
-
+    
+    def last_post(self):
+        try:
+            return Entry.objects.filter(debate=self).order_by('-pub_date')[0]
+        except IndexError:
+            return None
 
 class Entry(models.Model):
     debate = models.ForeignKey(Debate)

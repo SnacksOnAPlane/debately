@@ -23,12 +23,5 @@ if settings.DEBUG:
             {'document_root': DEBATELY_STATIC_PATH}),
     )
     
-    # user authentication for development/testing
-    urlpatterns+= patterns('',
-        (r'^login/', 'django.contrib.auth.views.login',
-         {'template_name': 'auth/login.html'}),
-        (r'^logout/', 'django.contrib.auth.views.logout',
-         {'template_name': 'auth/logout.html'}),
-    )                       
     
 

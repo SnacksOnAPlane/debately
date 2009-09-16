@@ -1,8 +1,28 @@
+body {
+	font-family: Verdana, sans-serif;
+	font-size: 12px;
+	line-height: 1.4em;
+}
+
+h1 {
+	margin-top: 15px;
+	margin-bottom: 15px;
+	font-size: 16px;
+	font-weight: bold;
+}
+
+h2 {
+	font-size: 14px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
 #header {
-  height: 100px;
-  background-color: #e0ebff;
-  border-bottom: 1px solid #666;
-  margin-bottom: 20px;
+	height: 100px;
+	background-color: #e0ebff;
+	padding: 5px;
+	border-bottom: 1px solid #666;
+	margin-bottom: 20px;
 }
 
 #content {
@@ -10,9 +30,28 @@
     margin: auto;
 }
 
+a.home {
+	float: left;
+}
+
+ul.debates {
+	margin-left: 10px;
+}
+
+ul.debates li {
+	border-bottom: 1px solid #666;
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
+#user_box {
+	float: right;
+}
+
 #footer {
- height: 40px;
- background-color: #ddd;
- margin-top: 20px;
- border-top: 1px solid black;
- border-bottom: 1px solid #555;
+	height: 40px;
+	background-color: #ddd;
+	margin-top: 20px;
+	border-top: 1px solid black;
+	border-bottom: 1px solid #555;
+}

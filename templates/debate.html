@@ -18,4 +18,10 @@
     <div class="pub_date">{{ entry.pub_date }}</div>
     <p class="debate_entry">{{ entry.text }}</p>
 {% endfor %}
+{% if userCanPostEntry %}
+    <form method="POST">
+        {{ entryForm }}
+        <input type="submit" />
+    </form>
+{% endif %}
 {% endblock %}

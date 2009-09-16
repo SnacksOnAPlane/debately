@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 
 from models import Debate, Entry, Comment, UserProfile
-from forms import CreateDebateForm
+from forms import CreateDebateForm, DebateEntryForm
 
 def index(req):
     # list all debates by pubdate
@@ -25,10 +25,18 @@ def get_comment_points(debate, user):
 
 def debate(req, id):
     debate = Debate.objects.get(id = id)
+    userCanPostEntry = req.user == debate.instigator or req.user == debate.challenger
+    if req.method == "POST":
+        form = DebateEntryForm(req.POST)
+        if form.is_valid() and userCanPostEntry:
+            Entry.objects.create(debate = debate, text = form.cleaned_data['text'], author = req.user)
+    entryForm = DebateEntryForm()
     c = { "debate": debate,
           "instigatorpoints": get_debate_points(debate, debate.instigator),
           "challengerpoints": get_debate_points(debate, debate.challenger),
-          "entries": Entry.objects.filter(debate = debate)
+          "entries": Entry.objects.filter(debate = debate),
+          "userCanPostEntry": userCanPostEntry,
+          "entryForm": entryForm,
          }
     return render_to_response('debate.html', RequestContext(req, c))
 

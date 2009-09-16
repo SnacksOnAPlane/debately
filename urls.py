@@ -8,6 +8,7 @@ DEBATELY_STATIC_PATH = os.path.join(
 
 urlpatterns = patterns('debately.views',
     (r'^debates/(\d+)$', 'debate'),
+    (r'^debates/create/$', 'createDebate'),
     (r'^users/(.*)', 'userpage'),
     (r'^$', 'index'),
 )

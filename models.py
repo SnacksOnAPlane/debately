@@ -14,7 +14,7 @@ class Debate(models.Model):
     summary = models.TextField() #not for the first entry! just a summary, please
     pub_date = models.DateTimeField(auto_now_add = True)
     instigator = models.ForeignKey(User, related_name = "instigator")
-    challenger = models.ForeignKey(User, related_name = "challenger")
+    challenger = models.ForeignKey(User, related_name = "challenger", null = True, blank = True)
 
 
 class Entry(models.Model):

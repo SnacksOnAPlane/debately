@@ -2,8 +2,11 @@ from django.contrib.auth.models import User
 from django.db.models import Sum
 from django.shortcuts import get_object_or_404, render_to_response
 from django.template import RequestContext
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseRedirect
 
 from models import Debate, Entry, Comment, UserProfile
+from forms import CreateDebateForm
 
 def index(req):
     # list all debates by pubdate
@@ -40,3 +43,17 @@ def userpage(req, user_name):
           'user_profile' : user_profile }
     return render_to_response('user_profile.html', 
                               RequestContext( req, c))
+
+@login_required
+def createDebate(req):
+    if req.method == "POST":
+        form = CreateDebateForm(req.POST)
+        if form.is_valid():
+            Debate.objects.create(title = form.cleaned_data['title'], 
+                    summary = form.cleaned_data['summary'], 
+                    instigator = req.user)
+            return HttpResponseRedirect('/')
+    else:
+        form = CreateDebateForm()
+
+    return render_to_response("create_debate.html", {"form": form})

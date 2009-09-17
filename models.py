@@ -14,13 +14,60 @@ class Debate(models.Model):
     summary = models.TextField() #not for the first entry! just a summary, please
     pub_date = models.DateTimeField(auto_now_add = True)
     instigator = models.ForeignKey(User, related_name = "instigator")
-    challenger = models.ForeignKey(User, related_name = "challenger", null = True, blank = True)
+    challenger = models.ForeignKey(User, related_name = "challenger", 
+                                   null = True, blank = True)
+    challenged_users = models.TextField()
     
+    def accept_all_challengers(self):
+        """
+        Returns True if this debate accepts all challengers, False otherwise
+        """
+        if self.challenger is not None:
+            return False
+
+        if not self.challenged_users.strip():
+            # no challengers specified, all users can challenge
+            return True
+
+        return False
+
+    def can_user_challenge(self, user):
+        """
+        Return True if a user can challenge this debate, False otherwise.
+        A user can challenge a debate if the debate accepts all challengers or
+        if the author of the debate specified the users name when creating
+        the debate.
+        """
+        if self.challenger is not None:
+            # debate already has challenger
+            return False
+
+        if isinstance(user, User):
+            if user == self.instigator:
+                # user cannot challenge own debate
+                return False
+
+            # user name in explicit challenged list
+            if user.username in self.challenged_users.split(','):
+                return True
+
+
+        if self.accept_all_challengers():
+            return True
+
+        # user cannot challenge    
+        return False
+
+    def get_absolute_url(self):
+        return "/debates/%d" % self.id
+
     def last_post(self):
         try:
             return Entry.objects.filter(debate=self).order_by('-pub_date')[0]
         except IndexError:
             return None
+
+
 
 class Entry(models.Model):
     debate = models.ForeignKey(Debate)

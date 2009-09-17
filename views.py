@@ -3,7 +3,7 @@ from django.db.models import Sum
 from django.shortcuts import get_object_or_404, render_to_response
 from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseRedirect
+from django.http import Http404, HttpResponseRedirect
 
 from models import Debate, Entry, Comment, UserProfile
 from forms import CreateDebateForm, DebateEntryForm
@@ -22,6 +22,23 @@ def get_debate_points(debate, user):
 
 def get_comment_points(debate, user):
     raise Exception("not implemented yet")
+
+
+@login_required
+def challenge_debate(req, id):
+    """accept challenge to debate"""
+    debate = get_object_or_404(Debate, pk=id)
+    #TODO: should return better error than 404
+    if debate.challenger is not None:
+        raise Http404("Invalid Request")
+
+    if not debate.can_user_challenge(req.user):
+        raise Http404("Invalid Request")
+    
+    debate.challenger = req.user
+    debate.save()
+    return HttpResponseRedirect(debate.get_absolute_url())
+
 
 def debate(req, id):
     debate = Debate.objects.get(id = id)
@@ -59,9 +76,11 @@ def createDebate(req):
         if form.is_valid():
             Debate.objects.create(title = form.cleaned_data['title'], 
                     summary = form.cleaned_data['summary'], 
-                    instigator = req.user)
+                    instigator = req.user,
+                    challenged_users = form.cleaned_data['challenged_users'])
             return HttpResponseRedirect('/')
     else:
         form = CreateDebateForm()
 
-    return render_to_response("create_debate.html", {"form": form})
+    return render_to_response("create_debate.html", 
+                              RequestContext(req, {"form": form}))

@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 
+{% load debate_filters %}
 {% block content %}
 <h1>Debately</h1>
 <a href="debates/create/">Start a debate</a>
@@ -10,10 +11,21 @@
 <div class="stats">
 	<a class="user" href="users/{{ debate.instigator.username }}">{{ debate.instigator.username }}</a>
 	vs.
+
+	{% if debate.challenger %}
 	<a class="user" href="users/{{ debate.challenger.username }}">{{ debate.challenger.username}}</a>
+	{% else %}
+	{% if debate|can_user_challenge:user %}
+	<a href="debates/challenge/{{debate.id}}">Challenge!</a>
+	{% else %}
+	?
+	{% endif %}
+	{% endif %}
+
 	{% if debate.last_post %}
 	<div class="lastpost">last post by {{ debate.last_post.author }}<br />{{ debate.last_post.pub_date|date:"H:i D d M Y" }}</div>
 	{% endif %}
+	
 </div>
 <div class="debate_summary">{{ debate.summary }}</div>
 <div class="clear" />

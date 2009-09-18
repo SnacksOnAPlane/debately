@@ -5,6 +5,6 @@
 {% block content %}
 <h1>{{ profile_user.username }}</h1>
 <span id="profile_details">
-Joined: {{ user_profile.join_date|date:"d F Y" }}
+Joined: {{ profile_user.date_joined|date:"d F Y" }}
 </span>
 {% endblock %}

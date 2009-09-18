@@ -5,11 +5,17 @@ from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
 from django.http import Http404, HttpResponseRedirect
 
-from models import Debate, Entry, Comment, UserProfile
+from models import Debate, Entry, Comment, UserMessage, UserProfile
 from forms import CreateDebateForm, DebateEntryForm
 
 def index(req):
-    # list all debates by pubdate
+    """list all debates by pubdate"""
+
+    # TODO: this is temporary, just to ensure a user profile 
+    # exists for authenticated users
+    if req.user.is_authenticated():
+        UserProfile.get_profile_for_user(req.user)
+
     debates = Debate.objects.all().order_by('-pub_date')
     return render_to_response('index.html', 
                               RequestContext(req, {'debates': debates}))
@@ -63,21 +69,41 @@ def userpage(req, user_name):
     Shows user page for valid users, returns 404 if user is not found.
     """
     profile_user = get_object_or_404(User, username=user_name)
-    user_profile = UserProfile.get_profile_for_user(profile_user)
-    c = { 'profile_user': profile_user,
-          'user_profile' : user_profile }
+    UserProfile.get_profile_for_user(profile_user)
+    c = { 'profile_user': profile_user }
     return render_to_response('user_profile.html', 
                               RequestContext( req, c))
 
 @login_required
-def createDebate(req):
+def usermessages(req):
+    """
+    Shows messages for user, returns 404 if user is not found
+    """
+    ctx = {}
+    return render_to_response('user_messages.html', 
+                              RequestContext( req, ctx))
+
+
+@login_required
+def create_debate(req):
     if req.method == "POST":
         form = CreateDebateForm(req.POST)
         if form.is_valid():
-            Debate.objects.create(title = form.cleaned_data['title'], 
-                    summary = form.cleaned_data['summary'], 
-                    instigator = req.user,
-                    challenged_users = form.cleaned_data['challenged_users'])
+            deb = Debate(title = form.cleaned_data['title'], 
+                         summary = form.cleaned_data['summary'], 
+                         instigator = req.user,
+                         challenged_users = form.cleaned_data['challenged_users'])
+            deb.save()
+            
+            if not deb.accept_all_challengers():
+                # add message for each challenged user.
+                for uname in deb.get_challenged_usernames():
+                    u = User.objects.get(username=uname)
+                    msg = UserMessage(recipient=u,
+                                      message="new challenge: %s" % deb.title,
+                                      sender=deb.instigator)
+                    msg.save()
+            
             return HttpResponseRedirect('/')
     else:
         form = CreateDebateForm()

@@ -61,6 +61,10 @@ class Debate(models.Model):
     def get_absolute_url(self):
         return "/debates/%d" % self.id
 
+    def get_challenged_usernames(self):
+        """returns a list of all usernames who were challenged"""
+        return self.challenged_users.split(',')
+
     def last_post(self):
         try:
             return Entry.objects.filter(debate=self).order_by('-pub_date')[0]
@@ -87,12 +91,20 @@ class Comment(models.Model):
                                             default = 0)
 
 
+class UserMessage(models.Model):
+    recipient = models.ForeignKey(User, related_name="inbox_messages")
+    sender = models.ForeignKey(User, related_name="sent_messages")
+    message = models.TextField()
+    date_read = models.DateTimeField(blank=True, null=True)
+    date_sent = models.DateTimeField(auto_now_add=True)
+    
+
 class UserProfile(models.Model):
     """
     A debate profile for users containing debate site details for each user.
     To get a user profile, call use the get_for_user(user_name) class method
     """
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(User, related_name="debately_profile")
     join_date = models.DateTimeField(auto_now_add=True)
   
     @classmethod
@@ -100,6 +112,8 @@ class UserProfile(models.Model):
         """
         Get debate user profile for given user.
         Creates new UserProfile for user if a user profile does not already exist.
+        The preferred method for retrieving the debately profile is to user
+        django.contrib.auth.models.User method debately_profile.get()
         """
         try:
             profile = UserProfile.objects.filter(user=profile_user)[0]
@@ -108,4 +122,19 @@ class UserProfile(models.Model):
             profile.save()
 
         return profile
+
+    #
+    # some utility methods/examples to get user messages from profile
+    def new_user_message_count(self):
+        """returns count of unread messages for user"""
+        return self.user.inbox_messages.filter(date_read=None).count()
+
+    def get_user_messages(self):
+        """all messages for user"""
+        return self.user.inbox_messages.order_by("-date_sent")
+
+    def get_sent_messages(self):
+        """all sent messages"""
+        return self.user.sent_messages.all()
+        
     

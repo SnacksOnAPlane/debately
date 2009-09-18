@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}{{ user.username }} | messages{% endblock %}
+
+{% block content %}
+<h1>messages for {{ user.username }}</h1>
+<ul>
+{% for msg in user.debately_profile.get.get_user_messages %}
+  <li>{{msg.sender}} - {{msg.date_sent|date}}
+    <p>{{msg.message}}</p>
+  </li>
+{% endfor %}
+</ul>
+{% endblock %}

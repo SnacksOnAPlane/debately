@@ -17,6 +17,13 @@
 	{% if user.is_authenticated %}
 	<a href="/users/{{ user.username }}">{{user.username}}</a>&nbsp;|&nbsp; 
 	<a href="/logout">logout</a>
+        {% if user.debately_profile.get.new_user_message_count %}
+          <div id="new_user_message">
+            <a href="/messages">
+              new messages ({{user.debately_profile.get.new_user_message_count}})
+            </a>
+          </div>
+        {% endif %}
 	{% else %}
 	<a href="/login">login</a>
 	{% endif %}

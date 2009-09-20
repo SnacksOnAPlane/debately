@@ -59,6 +59,7 @@ def debate(req, id):
           "challengerpoints": get_debate_points(debate, debate.challenger),
           "entries": Entry.objects.filter(debate = debate),
           "userCanPostEntry": userCanPostEntry,
+          "userCanComment": req.user.is_authenticated() and not userCanPostEntry,
           "entryForm": entryForm,
          }
     return render_to_response('debate.html', RequestContext(req, c))

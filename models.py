@@ -71,7 +71,8 @@ class Debate(models.Model):
         except IndexError:
             return None
 
-
+    def __unicode__(self):
+        return self.title
 
 class Entry(models.Model):
     debate = models.ForeignKey(Debate)
@@ -85,6 +86,8 @@ class Entry(models.Model):
         else:
             return "challenger"
 
+    def __unicode__(self):
+        return "%s: %s, %s" % (self.debate.title, self.author, self.pub_date)
 
 class Comment(models.Model):
     author = models.ForeignKey(User)
@@ -96,6 +99,8 @@ class Comment(models.Model):
     parent_points = models.SmallIntegerField(choices = POINT_CHOICES, 
                                             default = 0)
 
+    def __unicode__(self):
+        return "%s, %s" % (self.author, self.pub_date)
 
 class UserMessage(models.Model):
     recipient = models.ForeignKey(User, related_name="inbox_messages")
@@ -103,7 +108,6 @@ class UserMessage(models.Model):
     message = models.TextField()
     date_read = models.DateTimeField(blank=True, null=True)
     date_sent = models.DateTimeField(auto_now_add=True)
-    
 
 class UserProfile(models.Model):
     """

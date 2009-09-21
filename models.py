@@ -16,7 +16,7 @@ class Debate(models.Model):
     instigator = models.ForeignKey(User, related_name = "instigator")
     challenger = models.ForeignKey(User, related_name = "challenger", 
                                    null = True, blank = True)
-    challenged_users = models.TextField()
+    challenged_users = models.TextField(blank = True)
     
     def accept_all_challengers(self):
         """

@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load avatars %}
 
 {% block title %}{{ debate.title }}{% endblock %}
 
@@ -15,6 +16,7 @@
 <div class="debate_summary">{{ debate.summary }}</div>
 {% for entry in entries %}
   <div class="debate_entry {{ entry.author_role }}">
+    {% avatar entry.author %}
     <div class="author">{{ entry.author }}</div>
     <div class="pub_date">{{ entry.pub_date }}</div>
     <p class="text">{{ entry.text }}</p>

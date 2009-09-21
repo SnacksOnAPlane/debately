@@ -79,6 +79,12 @@ class Entry(models.Model):
     author = models.ForeignKey(User)
     pub_date = models.DateTimeField(auto_now_add = True)
 
+    def author_role(self):
+        if self.author == self.debate.instigator:
+            return "instigator"
+        else:
+            return "challenger"
+
 
 class Comment(models.Model):
     author = models.ForeignKey(User)

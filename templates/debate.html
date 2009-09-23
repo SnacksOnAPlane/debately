@@ -26,7 +26,19 @@
       <a class="comment_link" href="/entries/{{ entry.id }}/comment">New Comment</a>
     {% endif %}
     </div>
+    {% for comment in entry.comments %}
     <div class="clear"></div>
+      <div class="comment">
+        <div class="author">
+            {% smallavatar comment.author %}<br />
+            {{ comment.author }}
+        </div>
+        <div class="text">
+            {{ comment.text }}
+            <div class="pub_date">{{ comment.pub_date }}</div>
+        </div>
+      </div>
+    {% endfor %}
   </div>
 {% endfor %}
 {% if userCanPostEntry %}

@@ -1,0 +1,32 @@
+
+div.instigator div.author {
+  float: left;
+}
+
+div.instigator .text {
+  margin-left: 100px;
+  margin-right: 40px;
+}
+
+div.challenger div.author {
+  float: right;
+}
+
+div.challenger .text {
+  margin-right: 100px;
+  margin-left: 40px;
+}
+
+div.pub_date {
+  float: left;
+}
+
+div.debate_entry {
+  clear: both;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+a.comment_link {
+  float: right;
+}

@@ -86,6 +86,9 @@ class Entry(models.Model):
         else:
             return "challenger"
 
+    def comments(self):
+        return Comment.objects.filter(parent_entry=self)
+
     def __unicode__(self):
         return "%s: %s, %s" % (self.debate.title, self.author, self.pub_date)
 

@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "debately_base.html" %}
 {% load avatars %}
 
 {% block title %}{{ debate.title }}{% endblock %}
@@ -15,17 +15,38 @@
   <div class="points">{{ challengerpoints }}</div>
 </div>
 {% for entry in entries %}
-  <div class="debate_entry {{ entry.author_role }}">
+  <div class="debate_entry {{ entry.author_role }} bubble">
+    <div class="clear"></div>
     <div class="author">
       {% avatar entry.author %}<br />
       {{ entry.author }}
     </div>
-    <div class="text">{{ entry.text }}
-    <div class="pub_date">{{ entry.pub_date }}</div>
-    {% if userCanComment %}
-      <a class="comment_link" href="/entries/{{ entry.id }}/comment">New Comment</a>
-    {% endif %}
+    <div class="rounded">
+        <div class="text">
+        {{ entry.text }}
+        </div>
+        <div class="pub_date">{{ entry.pub_date }}</div>
+        {% if userCanComment %}
+          <a class="comment_link" href="/entries/{{ entry.id }}/comment">New Comment</a>
+        {% endif %}
+        <div class="clear"></div>
     </div>
+    {% for comment in entry.comments %}
+      <div class="comment">
+        <div class="clear"></div>
+        <div class="author">
+            {% smallavatar comment.author %}<br />
+            {{ comment.author }}
+        </div>
+        <div class="rounded">
+            <div class="text">
+                {{ comment.text }}
+            </div>
+            <div class="pub_date">{{ comment.pub_date }}</div>
+            <div class="clear"></div>
+         </div>
+      </div>
+    {% endfor %}
     <div class="clear"></div>
   </div>
 {% endfor %}

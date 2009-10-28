@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block customstyle %}
+    <link rel="stylesheet" href="{{MEDIA_URL}}/debately/static/style.css" />
+    <link rel="stylesheet" href="{{MEDIA_URL}}/debately/static/bubbles.css" />
+    <script type="text/javascript" src="{{MEDIA_URL}}/debately/static/rounded_corners.inc.js"></script>
+    <script type="text/javascript" src="{{MEDIA_URL}}/debately/static/curvycorners.js"></script>
+    <script type="text/javascript">
+      window.onload = function() {
+          settings = {
+              tl: { radius: 10 },
+              tr: { radius: 10 },
+              bl: { radius: 10 },
+              br: { radius: 10 },
+              antiAlias: true,
+              autoPad: true
+          }
+          var myBoxObject = new curvyCorners(settings, "rounded");
+          //myBoxObject.applyCornersToAll();
+      }
+    </script>
+
+{% endblock %}
+

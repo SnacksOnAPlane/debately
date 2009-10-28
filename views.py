@@ -3,10 +3,10 @@ from django.db.models import Sum
 from django.shortcuts import get_object_or_404, render_to_response
 from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
-from django.http import Http404, HttpResponseRedirect
+from django.http import Http404, HttpResponseRedirect, HttpResponse
 
 from models import Debate, Entry, Comment, UserMessage, UserProfile
-from forms import CreateDebateForm, DebateEntryForm
+from forms import CreateDebateForm, DebateEntryForm, CreateCommentForm
 
 def index(req):
     """list all debates by pubdate"""
@@ -111,3 +111,21 @@ def create_debate(req):
 
     return render_to_response("create_debate.html", 
                               RequestContext(req, {"form": form}))
+
+@login_required
+def create_comment(req, entry):
+    if req.method == "POST":
+        entry = Entry.objects.get(pk=entry)
+        form = CreateCommentForm(req.POST)
+        if form.is_valid():
+            comment = Comment(text = form.cleaned_data['text'],
+                              parent_entry = entry,
+                              author = req.user,
+                              parent_points = form.cleaned_data['points'])
+            comment.save()
+            debatenum = entry.debate.id
+            return HttpResponseRedirect('/debates/%s' % debatenum)
+    else:
+        form = CreateCommentForm()
+        return render_to_response("create_comment.html",
+                                  RequestContext(req, {"form": form}))

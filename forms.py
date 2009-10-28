@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
+from models import POINT_CHOICES
 
 
 class ChallengedUsersField(forms.Field):
@@ -39,4 +40,8 @@ class CreateDebateForm(forms.Form):
 
 
 class DebateEntryForm(forms.Form):
+    text = forms.CharField(widget=forms.Textarea)
+
+class CreateCommentForm(forms.Form):
+    points = forms.ChoiceField(choices=POINT_CHOICES, initial=0)
     text = forms.CharField(widget=forms.Textarea)

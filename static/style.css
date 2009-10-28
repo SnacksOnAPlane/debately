@@ -52,3 +52,24 @@ div.challenger div.comment {
 a.comment_link {
   float: right;
 }
+ 
+div.user_head {
+  text-align: center;
+  font-size: 20px;
+  padding: 20px;
+}
+ 
+div.user_head#instigator {
+  float: left;
+}
+
+div.user_head#challenger {
+  float: right
+}
+
+div.points {
+  color: green;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  font-size: 28px;
+}

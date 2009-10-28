@@ -24,7 +24,7 @@ def get_debate_points(debate, user):
     return Comment.objects.filter(parent_entry__debate = debate, 
                                   parent_entry__author = user, 
                                   parent_comment = None).aggregate(
-                                      Sum('parent_points'))['parent_points__sum']
+                                      Sum('parent_points'))['parent_points__sum'] or 0
 
 def get_comment_points(debate, user):
     raise Exception("not implemented yet")
